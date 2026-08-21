@@ -13,7 +13,7 @@ rotating pages, deleting pages, and exporting a new document.
   and export.
 - Treat file names as untrusted text and render them through React text output.
 - Keep the quiet iruagaru visual language and the production
-  `https://iruagaru.com/pdf-edit/` URL.
+  `https://tools.iruagaru.com/pdf-edit/` URL.
 - Preserve bundled license notices for pdf-lib and PDF.js.
 - Keep the PDF.js worker at `public/pdf.worker.min.js`; the Xserver host serves
   `.mjs` as plain text, so module workers using that extension fail in browsers.

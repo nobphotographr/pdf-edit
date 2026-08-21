@@ -4,8 +4,8 @@
 
 ## 公開URL
 
-- 本番: https://iruagaru.com/pdf-edit/
-- プレビュー: https://xpreview.iruagaru.com/pdf-edit/
+- 本番: https://tools.iruagaru.com/pdf-edit/
+- 旧URL: https://iruagaru.com/pdf-edit/（本番公開後に301転送）
 
 ## できること
 
@@ -38,8 +38,7 @@ npm run lint
 ## 公開
 
 ```bash
-./scripts/deploy-iruagaru.sh
-./scripts/deploy-xpreview.sh
+./scripts/deploy-tools.sh
 ```
 
 ## 使用しているOSS
