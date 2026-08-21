@@ -4,7 +4,8 @@
 
 ## 公開URL
 
-- https://xpreview.iruagaru.com/pdf-edit/
+- 本番: https://iruagaru.com/pdf-edit/
+- プレビュー: https://xpreview.iruagaru.com/pdf-edit/
 
 ## できること
 
@@ -37,6 +38,7 @@ npm run lint
 ## 公開
 
 ```bash
+./scripts/deploy-iruagaru.sh
 ./scripts/deploy-xpreview.sh
 ```
 

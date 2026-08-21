@@ -2,11 +2,12 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-test("exports a subpath-safe static site for xpreview", async () => {
+test("exports a subpath-safe static site for iruagaru", async () => {
   const html = await readFile(new URL("../out/index.html", import.meta.url), "utf8");
 
   assert.match(html, /<title>PDFのページを、整える。｜iruagaru<\/title>/);
-  assert.match(html, /https:\/\/xpreview\.iruagaru\.com\/pdf-edit\/og\.png/);
+  assert.match(html, /https:\/\/iruagaru\.com\/pdf-edit\/og\.png/);
+  assert.match(html, /rel="canonical" href="https:\/\/iruagaru\.com\/pdf-edit\/"/);
   assert.match(html, /\/pdf-edit\/assets\//);
 
   await Promise.all([

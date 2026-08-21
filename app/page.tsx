@@ -214,7 +214,7 @@ export default function Home() {
   return (
     <main>
       <header className="site-header">
-        <a className="brand" href="https://xpreview.iruagaru.com/">IRUAGARU / PDF TOOLS</a>
+        <a className="brand" href="https://iruagaru.com/">IRUAGARU / PDF TOOLS</a>
         <span className="local-badge"><i /> LOCAL PROCESSING</span>
       </header>
 
