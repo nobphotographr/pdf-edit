@@ -67,7 +67,10 @@ export default function Home() {
 
     try {
       const pdfjs = await import("pdfjs-dist");
-      pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
+      pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+        `${import.meta.env.BASE_URL}pdf.worker.min.js`,
+        window.location.origin,
+      ).toString();
 
       const nextSources: SourcePdf[] = [];
       const nextPages: PageItem[] = [];

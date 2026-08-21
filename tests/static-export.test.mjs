@@ -10,9 +10,18 @@ test("exports a subpath-safe static site for xpreview", async () => {
   assert.match(html, /\/pdf-edit\/assets\//);
 
   await Promise.all([
+    access(new URL("../out/pdf.worker.min.js", import.meta.url)),
     access(new URL("../out/licenses/pdf-lib-MIT.txt", import.meta.url)),
     access(new URL("../out/licenses/pdfjs-Apache-2.0.txt", import.meta.url)),
     access(new URL("../out/og.png", import.meta.url)),
     access(new URL("../out/favicon.png", import.meta.url)),
   ]);
+});
+
+test("uses a JavaScript worker URL that works below the public subpath", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /import\.meta\.env\.BASE_URL/);
+  assert.match(page, /pdf\.worker\.min\.js/);
+  assert.doesNotMatch(page, /pdf\.worker\.min\.mjs/);
 });

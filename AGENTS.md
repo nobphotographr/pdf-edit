@@ -14,6 +14,8 @@ rotating pages, deleting pages, and exporting a new document.
 - Treat file names as untrusted text and render them through React text output.
 - Keep the quiet iruagaru visual language and the public `/pdf-edit/` subpath.
 - Preserve bundled license notices for pdf-lib and PDF.js.
+- Keep the PDF.js worker at `public/pdf.worker.min.js`; the Xserver host serves
+  `.mjs` as plain text, so module workers using that extension fail in browsers.
 
 ## Required checks
 
