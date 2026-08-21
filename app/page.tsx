@@ -83,39 +83,41 @@ export default function Home() {
 
         const loadingTask = pdfjs.getDocument({ data: bytes.slice() });
         const pdfDocument = await loadingTask.promise;
-        nextSources.push({ id: sourceId, name: file.name, bytes, pageCount: pdfDocument.numPages, size: file.size });
+        try {
+          nextSources.push({ id: sourceId, name: file.name, bytes, pageCount: pdfDocument.numPages, size: file.size });
 
-        for (let pageIndex = 0; pageIndex < pdfDocument.numPages; pageIndex += 1) {
-          setProgress(`${file.name} / ${pageIndex + 1}ページ目を準備しています`);
-          const page = await pdfDocument.getPage(pageIndex + 1);
-          const originalViewport = page.getViewport({ scale: 1 });
-          const scale = Math.min(1, 220 / originalViewport.width);
-          const viewport = page.getViewport({ scale });
-          const canvas = window.document.createElement("canvas");
-          const context = canvas.getContext("2d", { alpha: false });
-          if (!context) throw new Error("PDFのプレビューを作成できませんでした。");
-          canvas.width = Math.ceil(viewport.width);
-          canvas.height = Math.ceil(viewport.height);
-          context.fillStyle = "#ffffff";
-          context.fillRect(0, 0, canvas.width, canvas.height);
-          await page.render({ canvas, canvasContext: context, viewport }).promise;
-          const thumbnailUrl = await canvasToObjectUrl(canvas);
-          page.cleanup();
+          for (let pageIndex = 0; pageIndex < pdfDocument.numPages; pageIndex += 1) {
+            setProgress(`${file.name} / ${pageIndex + 1}ページ目を準備しています`);
+            const page = await pdfDocument.getPage(pageIndex + 1);
+            const originalViewport = page.getViewport({ scale: 1 });
+            const scale = Math.min(1, 220 / originalViewport.width);
+            const viewport = page.getViewport({ scale });
+            const canvas = window.document.createElement("canvas");
+            const context = canvas.getContext("2d", { alpha: false });
+            if (!context) throw new Error("PDFのプレビューを作成できませんでした。");
+            canvas.width = Math.ceil(viewport.width);
+            canvas.height = Math.ceil(viewport.height);
+            context.fillStyle = "#ffffff";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            await page.render({ canvas, canvasContext: context, viewport }).promise;
+            const thumbnailUrl = await canvasToObjectUrl(canvas);
+            page.cleanup();
 
-          nextPages.push({
-            id: crypto.randomUUID(),
-            sourceId,
-            sourceName: file.name,
-            sourcePageIndex: pageIndex,
-            pageNumber: pageIndex + 1,
-            rotation: 0,
-            thumbnailUrl,
-            width: originalViewport.width,
-            height: originalViewport.height,
-          });
+            nextPages.push({
+              id: crypto.randomUUID(),
+              sourceId,
+              sourceName: file.name,
+              sourcePageIndex: pageIndex,
+              pageNumber: pageIndex + 1,
+              rotation: 0,
+              thumbnailUrl,
+              width: originalViewport.width,
+              height: originalViewport.height,
+            });
+          }
+        } finally {
+          await loadingTask.destroy();
         }
-
-        await pdfDocument.destroy();
       }
 
       setSources((current) => [...current, ...nextSources]);

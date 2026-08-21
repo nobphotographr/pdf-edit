@@ -23,5 +23,7 @@ test("uses a JavaScript worker URL that works below the public subpath", async (
 
   assert.match(page, /import\.meta\.env\.BASE_URL/);
   assert.match(page, /pdf\.worker\.min\.js/);
+  assert.match(page, /await loadingTask\.destroy\(\)/);
   assert.doesNotMatch(page, /pdf\.worker\.min\.mjs/);
+  assert.doesNotMatch(page, /pdfDocument\.destroy\(\)/);
 });
